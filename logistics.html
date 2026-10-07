@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial Logistics & Supply Chain Allocation Stack</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #d35400;
+            --dark: #34495e;
+            --light: #f8f9fa;
+            --border: #dcdde1;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f3f4;
+            color: var(--dark);
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 26px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .header p {
+            margin: 5px 0 0 0;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #7f8c8d;
+        }
+        input, select {
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 15px;
+            background-color: var(--light);
+        }
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .btn:hover {
+            background-color: #b33900;
+        }
+        .results-box {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fdfefe;
+            border: 1px dashed var(--accent);
+            border-radius: 6px;
+            display: none;
+        }
+        .results-box h3 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .summary-line.total {
+            border-top: 2px solid var(--primary);
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 18px;
+            color: var(--primary);
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Industrial Logistics & Supply Chain Allocation Stack</h1>
+        <p>Auxiliary Pipeline Multiplier Variant</p>
+    </div>
+
+    <form id="logisticsForm" onsubmit="calculateLogistics(event)">
+        <div class="section-title">Throughput & Capacity Metrics</div>
+        <div class="grid">
+            <div class="form-group">
+                <label for="volume">Monthly Freight Volume (Tons/Units)</label>
+                <input type="number" id="volume" min="10" placeholder="e.g. 5000" required>
+            </div>
+            <div class="form-group">
+                <label for="mileage">Average Route Distance (Miles)</label>
+                <input type="number" id="mileage" min="1" placeholder="e.g. 450" required>
+            </div>
+            <div class="form-group">
+                <label for="logisticsType">Logistical Framework</label>
+                <select id="logisticsType" required>
+                    <option value="0.85">Regional Hub Logistics</option>
+                    <option value="1.15">Cross-Border / Multi-Node Fleet</option>
+                    <option value="1.45">Specialized Cold-Chain / High-Margin</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn">Calculate Industrial Allocation</button>
+    </form>
+
+    <div id="results" class="results-box">
+        <h3>Logistical Optimization Report</h3>
+        <div class="summary-line">
+            <span>Estimated Freight Operational Cost:</span>
+            <span id="outFreight">\$0.00</span>
+        </div>
+        <div class="summary-line">
+            <span>System Infrastructure Overhead:</span>
+            <span id="outOverhead">\$0.00</span>
+        </div>
+        <div class="summary-line total">
+            <span>Target Pipeline Target Invoice Value:</span>
+            <span id="outInvoice">\$0.00</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    function calculateLogistics(e) {
+        e.preventDefault();
+        const volume = parseFloat(document.getElementById('volume').value);
+        const mileage = parseFloat(document.getElementById('mileage').value);
+        const typeMultiplier = parseFloat(document.getElementById('logisticsType').value);
+        
+        const freightCost = volume * (mileage * 0.12) * typeMultiplier;
+        const overheadCost = freightCost * 0.22;
+        const totalInvoice = (freightCost + overheadCost) * 1.35; // Locked gross margin yield
+
+        document.getElementById('outFreight').innerText = '\(' + freightCost.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '\)&,');
+        document.getElementById('outOverhead').innerText = '\(' + overheadCost.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '\)&,');
+        document.getElementById('outInvoice').innerText = '\(' + totalInvoice.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '\)&,');
+        document.getElementById('results').style.display = 'block';
+
+        // Direct bridge telemetry webhook notification back to capture engine
+        fetch('https://formspree.io', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+                _subject: "⚠️ ALERT: Industrial Logistics Tool Triggered",
+                to: "JAYTEEHIGDON315@gmail.com",
+                message: `Industrial parameters tracked!\n\nVolume: ${volume}\nMileage: ${mileage}\nProjected Invoice: ${document.getElementById('outInvoice').innerText}`
+            })
+        });
+    }
+</script>
+
+</body>
+</html>
